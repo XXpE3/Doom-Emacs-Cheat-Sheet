@@ -1,0 +1,337 @@
+#+TITLE: 终极 Doom Emacs 速查表
+
+* 给 Emacs 新手的一些建议
+- 使用 [[https://www.emacswiki.org/emacs/EmacsClient][EmacsClient]] 并设置守护进程。你的 Emacs 体验会*大幅*提升，而且会节省很多时间。
+- 为了获得更好的体验，使用 Emacs 内置的文件管理器。
+- 让 [[https://emacs-lsp.github.io/lsp-mode/][LSP]] 运行起来。它会把 Emacs 变成一个功能齐全的现代 IDE。Emacs 几乎支持所有语言的 LSP。
+- 尽可能避免使用终端版本的 Emacs。
+- 使用 Doom Emacs 的内置帮助来了解底层的工作原理，并根据自己的需要进行修改。
+  - =SPC h k= 告诉你键盘组合如何转换为 Emacs 命令。
+  - =SPC h w= 帮助你查找不同命令的键盘快捷键。
+  - =SPC h v= 让你查看变量内容并修改它们。
+  - =SPC h f= 告诉你函数的信息以及它们的定义位置。
+  - =SPC h b b= 查看所有键绑定列表
+- Github 对 org 文件的渲染效果不太好。最好克隆这个仓库并在 Emacs 中打开它。
+- 也请查看此仓库中的其他文件。目前还提供了 Go 和 Python 的额外说明。如果有任何遗漏，或者你可以建议更好的工作流程，请务必贡献出来。
+- Doom Emacs 是一个很棒的 Emacs 发行版，但要更深入地理解 Emacs，可以尝试使用[[https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/][这个指南]]或[[https://arne.me/blog/emacs-from-scratch-part-two][类似的]][[https://www.youtube.com/watch?v=74zOY-vgkyw&list=PLEoMzSkcN8oPH1au7H6B7bBJ4ZO7BXjSZ][指南]]来自己设置一个最小版本的 Emacs。
+* 命令缩写
+- =C= - "Control" 键
+- =M= - "Alt" 或 "Option" 键
+- =S= - "Super" 或 "Command" 键
+- =SPC= - "空格" 键
+* 通用操作
+- =SPC f s= 保存当前文件
+- =SPC := 输入命令
+- =SPC q q= 关闭 Emacs
+- =SPC f D= 删除此文件
+* 使用 Projectile 管理项目
+- =SPC p p= 打开项目
+- =SPC SPC= 在项目中打开文件
+- =SPC o p= 打开文件浏览器
+- =SPC o E= 全屏打开 shell (eshell)
+- =SPC o e= 在弹出窗口中打开 shell (eshell)
+- =SPC f r= 最近访问的文件
+- =SPC p r= 项目中最近访问的文件
+- =M-x projectile-discover-projects-in-directory= 使用 Projectile 在给定文件夹内查找项目
+- =M-x projectile-discover-projects-in-search-path= 使用 Projectile 在 =projectile-project-search-path= 变量定义的文件夹中查找项目
+* Dired
+- Dired（目录编辑器）是你与目录交互的方式
+- 按 =C-x d= 打开 dired。
+- 使用 =RET= 进入文件夹或打开文件。
+- 使用 =-= 返回上一级文件夹
+- 使用 =+= 创建新目录
+- 使用 =d= 标记要删除的文件，按 =x= 删除。
+- 使用 =M= 更改权限
+- 使用 =o= 按模式排序。
+- 使用 =O= 更改所有者。
+- 使用 =m= 标记文件或目录，=u= 取消标记。
+- =U= 取消选择所有
+- 使用 =t= 反转选择。
+- =t= 在文件和目录之间切换
+- 使用 =C= 复制。
+- 使用 =R= 移动。
+- 使用 =h=, =j=, =k=, =l= 移动
+- 切换 =(= 简单视图
+- =SPC .= 创建或查找文件
+  - 使用方向键，或按住 =C-= 加 =h=,=j=,=k=, 和 =l= 在选项之间选择。
+- =*= 选择所有目录。
+- =C= 复制到另一个窗口
+- =R= 移动到另一个窗口
+- =dired-do-what-i-mean-target= 设置为 true
+- =i= 编辑文件/目录名称
+* 缓冲区、窗口和基本导航
+** 缓冲区
+- 缓冲区是 emacs 中的一个特殊概念，它们可以是终端、文件、目录等
+- =SPC b b= 打开另一个缓冲区
+  - 工作区缓冲区
+- =SPC b B= 你可以看到所有缓冲区
+- =SPC ,= 切换缓冲区（这是一个别名）
+- =SPC SHIFT ,= 切换到所有缓冲区
+- =SPC b X= 你可以创建一个临时缓冲区
+- =SPC b s= 保存并命名它
+** 窗口
+- 窗口是屏幕中的窗格
+- =SPC w v= 垂直分割窗口
+- =SPC w s= 水平分割窗口
+- =SPC w w= 切换窗口
+- =SPC w q= 关闭窗口、框架，如果是最后一个框架则退出 EMACS
+- =SPC w o= 放大当前窗口
+- =SPC w u= 撤销最后的窗口更改（例如，恢复到放大前的窗口状态）
+- =SPC w == 平衡窗口大小
+- =SPC w += 和 =SPC w -= 增加和减少窗口高度
+- =SPC w >= 和 =SPC w <= 增加和减少窗口宽度
+- 你可以使用 vim 移动键在打开的窗口之间导航，例如 =SPC w H= 将窗口移到左边。
+** 工作区
+- =SPC TAB n= 新建工作区
+- =SPC TAB N= 新建命名工作区
+- =SPC TAB [= 上一个工作区
+- =SPC TAB ]= 下一个工作区
+- =SPC TAB d= 删除工作区
+- =SPC TAB R= 恢复上次会话
+- =M-1= 切换到工作区 1
+- =M-2= 切换到工作区 2，以此类推。
+* 安装包 - 以 org-super-agenda 为例
+- =SPC f p= 打开配置。
+- 要添加包，将包添加到 =.doom.d/package.el=
+- 然后关闭并执行 =doom refresh=
+- 然后转到 =.doom.d/config.el= 配置包
+- =def-package!= 是一个可以用来配置包的宏
+  - =space h help= 你可以查找方法的手册页
+  - =:init= 用于设置包
+  - =:config= 在包初始化后设置配置
+  - =:after= 让你设置它应该在哪个包之后加载
+- 你可以使用 =:after!= 来配置已经存在的包
+* 使用 evil-snipe 进行快速水平移动
+** 行内导航
+- =f= 然后输入你想要导航到的字母。
+  + =,= 将向后移动
+  + =;= 将在该"查找"之后向前移动
+- =t= 查找并将光标移动到你搜索的字符之前。
+- =v= 进入可视模式。你可以通过 =v t 某个要导航到的字符= 或 =v f 某个要导航到的字符= 来选择文本
+- =;= 跳转到下一个查找
+- =,= 跳转到上一个
+- =s= 进行狙击
+** 文件内的长距离导航
+- Evil-snipe 让你可以跳转到文档中的所有出现位置
+- =g s SPC= 使用 avy 并跳转到文件中的某个单词。
+- =t= 是相同的功能，除了跳转到你想要跳转到的字符之前的一个字符
+- =s= 进行双字符搜索
+- Evil-snipe 会记住你的最后一次搜索，所以 =,= 和 =;= 会导航
+- =F= 或 =T= 向后移动
+- =g s SPC= 然后选择 avy 给你的字母以导航到该位置
+  - 这些字母在你的主行上，所以很容易点击
+- =SPC h v= 查看变量，设置 avy 变量以搜索所有打开的窗口
+  + =avy-all-windows= 让你在所有打开的窗口中搜索。
+- 你可以用以下方式删除一个单词
+  =g s SPC 选择一个字母 x 选择删除位置=
+  + 你可以使用 =X= 停留在你原始的搜索位置
+- 你可以执行 =g s space 选择一个字母 i 选择纠正位置=
+  来纠正搜索的拼写
+  - 首先在你的操作系统上安装 ispell
+- 你可以从一个地方到另一个地方=复制=一个单词
+  =g s SPC 选择一个字母 y 选择要粘贴的纠正位置=
+- 使用 =t= 将单词从一个地方"传送"到另一个地方
+  =g s SPC 选择一个字母 t 选择要传送到的纠正位置=
+* 在 Emacs 中使用 evil-multiedit 进行多光标操作
+- 使用 evil-multiedit（在其他 IDE 中称为多光标），你可以进行选择，然后同时编辑这些选择。要做到这一点，请在你的 =init.el= 中取消注释 =multiple-cursors=。
+- =M-d= 将选择当前单词，再次按下它将找到另一个出现
+- =M-D= 将向上查找一个出现
+- 你也可以使用可视选择来选择多个单词。
+- =R= 将选择所有出现。
+- =CTRL n= 下一个选择 =CTRL p= 上一个。
+- 使用 =RET= 排除匹配
+- 你可以进行编辑，更改将反映到所有选择。
+* Org Mode
+** 基础
+- Org mode 让你能够构建文档结构
+- =*= 表示 h1 =**= 表示 h2，以此类推
+- 你可以 =TAB= 一个部分来折叠子树（隐藏它）
+- 你可以使用 =SHIFT TAB= 在折叠状态之间循环
+- =CTRL return= 创建相同类型的标题
+- =M-arrow up= 让你移动部分的位置
+- =M-h= 将标题提升到下一级
+- =M-l= 降级
+- 你可以创建列表
+  1. 一
+  2. 2
+  3. 哇哦
+  4. 3
+
+** 链接、超链接等
+- =SPC m l= 添加到 org 页面的链接
+- 你可以添加 =::= 来指定标题或行号
+- 你也可以粘贴 http 链接
+- 你可以用特定代码"链接"一些文本 =SPC m l= elisp: [[elisp:(+ 2 2)][(+ 2 2)]] 当你点击链接时，emacs 将计算表达式
+- 显示 [[elisp:org-agenda][我的议程]]
+- [[shell:ls][列出文件]] 在目录中
+** 定义自定义链接类型
+- [[https://youtube.com/watch?v=Febe4lUK5G4][观看关于自定义链接的视频]]
+** 链接到单词和书签
+- =SPC n l= 存储到特定标题的链接
+** 代码片段和 Babel
+- =SPC i s= 插入代码片段
+  + 示例：
+   #+begin_src emacs-lisp :tangle yes
+  (+ 2 3 4 5)
+   #+end_src
+- =C-c C-c= 执行代码。
+- =SPC m '= 在另一个缓冲区中编辑 babel 内部。
+- 结果将显示在 =##+RESULTS= 标题中
+- 这个功能叫做 Babel
+- 一个片段可以使用另一个片段的输出
+- 你可以在以下目录中创建自己的片段：=~/.doom.d/snippets/=
+** 任务管理
+- 通过在任何标题前加上 =TODO= 来创建任务
+- =DONE= 表示任务已完成
+- 你可以通过更改此变量来创建自定义关键字：=org-todo-keywords=
+  - 记住你可以通过 =SPC h v= 访问你的变量（M-x counsel-describe-variable）
+  - 这些值已经在 Doom 中设置：
+    #+BEGIN_EXAMPLE
+           ((sequence "TODO(t)" "PROJ(p)" "STRT(s)" "WAIT(w)" "HOLD(h)" "|" "DONE(d)" "KILL(k)")
+        (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)"))
+    #+END_EXAMPLE
+- =SPC m t= 更改待办事项的状态
+- =SHIFT left= 和 =SHIFT right= 也可以用来更改待办事项的状态。
+- 如果你用命令完成任务，org mode 会添加你"关闭"任务的日期。
+- =SPC o a t= 打开议程 -> 待办事项列表
+- =q= 退出
+- =org-agenda-files= 是一个变量，你可以设置它来过滤议程在哪些文件中搜索待办事项。
+
+*** 任务优先级
+- =SHIFT up= 和 =SHIFT down= 将切换任务的优先级
+- =org-fancy-priorities= 给你漂亮的优先级外观
+
+*** 用标签标记任务
+- 标签可以附加到任何标题
+- =SPC m q= 给标题添加标签
+- 示例：
+  - TODO 玩更多游戏 :fun:
+- 标签是分层的，所以嵌套的标题将被标记为父标题标签
+- =org-tag-sparce-tree= 将搜索只有特定标签的标题
+
+*** 为任务/标题设置属性
+- =SPC m o= 用于设置属性。
+**** 用类别标记标题
+- 你可以使用[[https://orgmode.org/manual/Categories.html][类别]]来更改议程视图中的标签。
+**** Org-Habits
+- 如果你想使用 org mode [[https://orgmode.org/manual/Tracking-your-habits.html][跟踪你的习惯]]，你可以将 =STYLE= 属性设置为 habit。
+** 列表
+- 两种类型的列表，有序列表和无序列表
+  - =SHIFT right= 和 =SHIFT left= 可以用来更改列表的类型。
+- 你也可以通过将第一项更改为 1. 然后输入 =C-c C-c= 来更改无序列表，反之亦然。
+** 复选框
+- [ ] 这还是待办
+- [-] 这正在进行中
+- [X] 这是已完成的任务
+*** 你可以用"cookie"查看完成了多少 [1/2]
+- [-] 任务 1
+- [X] 任务 2
+- 你可以通过在标题中添加 [/] 并按下 =C-c C-c= 来做到这一点
+- 你不能分配标签或优先级
+** 其他
+- =C-c C-z= 在 org mode 中为标题插入注释。
+:LOGBOOK:
+- 在 [2020-12-18 Fri 21:52] 记录的注释 \\
+  像这样！
+:END:
+- =C-c C-c= 在 org mode 中为标题插入标签。
+* Magit
+- Magit 在 Doom Emacs 的 init.el 中默认启用
+- =SPC g g= 显示 Magit 状态页面
+  + 大多数命令都是从状态页面完成的
+  + 使用 tab 在状态页面中展开标题
+- 在 Magit 的状态页面中按 =?= 查看可用命令和帮助的漂亮列表，按 =q= 关闭此帮助页面
+- 使用 =TAB= 打开文件的差异视图
+- 在"未暂存的更改"下按 =s= 暂存更改
+  + =u= 撤销更改
+  + =c= 提交
+- =b s= 用于分支和分离以创建另一个分支，回滚你对 master 所做的提交
+- =b b= 切换分支
+
+** 更详细的 Git 提交流程
+- =t t= 创建标签，默认位置是你当前选择的提交
+- =V= 在差异中选择更改，=x= 丢弃该更改。
+- =s= 暂存
+- =c= 提交，你可以 =q= 退出提交屏幕
+- =P= 推送，然后 =p= 到你的远程或 =u= 到另一个远程
+** 使用 Forge 的 Magit 发出拉取请求 - Emacs
+- Forge 已安装在 emacs doom 中
+- =@= 用于 forge
+- 使用 =M-x forge-pull= 设置 forge
+  - 第一次你将从 Github 获得一个令牌
+- =@ c p= 使用 forge 创建拉取请求
+  - 选择基础分支
+  - 然后选择目标分支
+  - 然后提供简短描述
+  - =CTRL c CTRL c= 完成拉取请求
+- 现在将有一个 =pull requests= 选项卡
+* LSP-Mode
+** LSP 相关
+- =lsp-update-server= 选择要更新的语言服务器。
+- =lsp-workspace-folders-add= 交互式地将文件夹设置为 LSP 工作区。
+- =lsp-workspace-folders-remove= 交互式地取消文件夹作为 LSP 工作区。
+- =lsp-workspace-restart= 重启你的工作区。在激活虚拟环境后特别有用。
+** 编码时
+- =SPC c c= 运行编译命令（或测试，或当前目录中的任何其他命令）
+- =SPC c C= 重复上面的命令
+- =SPC c d= 跳转到变量/函数/...定义
+  - =C o= (=evil-jump-backward=) 回到跳转列表中的上一个位置
+  - =C i= (=evil-jump-forward=) 在跳转列表中前进
+- =SPC c D= 查看变量/函数/...的引用
+- =SPC c e= 评估当前缓冲区或区域（当没有选择时，相当于运行 =SPC c c= 并写入 =go run= + 文件名。）
+- =SPC c f= 查看变量/函数/...的引用
+- =SPC c k= 跳转到文档
+- =SPC c r= 重命名所有项目文件中变量/函数在点处的所有引用和定义
+- =SPC c s= 发送到 REPL
+- =SPC c x= 查看所有 LSP 诊断
+- =lsp-ui-imenu= 导航代码中的定义
+- =flycheck-list-errors= 查看 LSP 检测到的错误。
+* 终端
+- 在你的 init.el 文件中设置 vterm。
+- =SPC o T= 打开 vterm
+- =SPC o t= 在弹出窗口中打开 vterm
+* 文件树
+- 在你的 init.el 文件中设置 neotree 或 treemacs。
+- =SPC o p= 打开 neotree 或 treemacs
+* 捕获
+- =SPC X= 捕获（新内容被捕获到单个文件，但这很好，因为我们可以轻松地重新归档它。）
+- =SPC m r r= 重新归档
+* Org Roam
+这些键绑定仅在安装 org-roam 后有效。要安装 org-roam，编辑你的 =init.el= 文件并在其指定位置添加 =(org +roam2)=。观看[[https://www.youtube.com/watch?v=AyhPmypHDEw][这个视频]]了解什么是 org-roam。
+
+- =SPC n r f= 查找现有节点或创建新节点。
+- =SPC n r i= 插入到另一个节点的链接。
+- =SPC n r r= 切换反向链接窗格
+- =SPC m m o t= 添加 roam 标签。
+- =SPC m m o a= 添加 roam 别名。
+* 代码折叠
+代码折叠有助于提高代码可读性。首先，确保 =fold= 在你的 =init.el= 文件中没有被注释掉，然后将光标移动到类或函数的定义处并尝试以下操作：
+
+- =z a= 切换点处的折叠。
+- =z m= 关闭所有折叠。
+- =z r= 打开所有折叠。
+- =z j= 下一个折叠区域。
+- =z k= 上一个折叠区域。
+
+* Latex
+- 待定，目前请参阅 [[https://michaelneuper.com/posts/efficient-latex-editing-with-emacs/][Michael Neuper 的博客文章]]，其中也有视频。
+
+* 双向文本（RTL 语言）
+- 首先在 =init.el= 中的 =:input= 下取消注释 =bidi=
+- 如果你的光标向错误的方向移动，请参阅这个 [[https://github.com/emacs-evil/evil/issues/892][evil-mode bug]] 并在必要时按 =C-z= 切换 evil-mode。
+- 要在任何地方启用 bidi-mode 并更改波斯语/阿拉伯语文本的字体，你可以使用下面的代码片段：
+#+begin_src emacs-lisp
+(+bidi-global-mode 1)
+(setq +bidi-want-smart-fontify nil)
+(set-fontset-font t 'arabic "Sahel") ; 也适用于波斯语
+#+end_src
+* 来源
+- [[https://www.youtube.com/watch?v=BRqjaN4-gGQ&list=PLhXZp00uXBk4np17N39WvB80zgxlZfVwj&index=10][Zaiste Programming 的 Doom Emacs 教程]]
+- [[http://web.archive.org/web/20201108144238/https://www.ianjones.us/zaiste-programming-doom-emacs-tutorial#org7ad2452][这个 org 文件主要来自 ianjones.us 从上述系列中记录的笔记]]
+- [[https://github.com/doomemacs/doomemacs][Doom Emacs 文档]]
+- [[https://www.youtube.com/watch?v=s0ed8Da3mjE][DistroTube 的 YouTube 视频]]
+- [[https://yusbk.github.io/2021/04/27/doom-emacs-tips/][yusbk 收集的非常好的 Doom Emacs 技巧]]
+* 要学习的内容 [0/3]
+- [ ] LSP
+- [ ] [[https://www.orgroam.com][Org Roam]]
+- [ ] abbrev-mode
